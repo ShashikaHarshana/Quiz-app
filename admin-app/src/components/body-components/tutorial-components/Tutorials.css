@@ -1,0 +1,69 @@
+.tutorials-section1 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.tutorials-section2 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.card {
+    width: 19vw;
+    height: 15vh;
+    padding: 12px 15px;
+}
+
+form.primary-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10px;
+    width: 100%;
+}
+
+div.input-container {
+    position: relative;
+    width: 100%;
+}
+
+button.login {
+    width: 100%;
+    border-radius: 20px;
+    border: none;
+    background-color: #010c80;
+    color: white;
+    padding: 8px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+button.login:hover {
+    background-color: #0113cc;
+    cursor: pointer;
+    box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.8);
+}
+
+span.login {
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+section.center {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+div.center {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}

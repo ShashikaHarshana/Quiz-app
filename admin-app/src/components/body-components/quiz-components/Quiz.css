@@ -1,0 +1,115 @@
+.quizzes-section1 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.quizzes-section2 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.card {
+  width: 240px;
+  height: 240px;
+  background: linear-gradient(to bottom right, violet, fuchsia);
+}
+
+form.login {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+div.input-container {
+  position: relative;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+button.login {
+  width: 100%;
+  border-radius: 20px;
+  border: none;
+  background-color: #010c80;
+  color: white;
+  padding: 8px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+button.login:hover {
+  background-color: #0113cc;
+  cursor: pointer;
+  box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.8);
+}
+
+input.primary-form-element {
+  width: 100%;
+  padding: 6px 10px;
+  padding-top: 10px;
+  border: 2px solid;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  border-radius: 5px;
+  background-color: transparent;
+}
+
+label.primary-form-element {
+  position: absolute;
+  top: 8px;
+  left: 10px;
+  pointer-events: none;
+  font-size: 14px;
+  color: #757575;
+  transition: all 0.3s ease;
+}
+
+.active-primary-form-lable {
+  top: -12px;
+  font-size: 16px;
+  color: black;
+  left: 10px;
+  background-color: white;
+  padding: 0 5px;
+  font-weight: 400;
+}
+
+.active-dark label.primary-form-element,
+input.primary-form-element:focus + label.primary-form-element {
+  top: -12px;
+  font-size: 16px;
+  color: unset;
+  left: 10px;
+  background-color: #16181a;
+  padding: 0 5px;
+  font-weight: 400;
+}
+
+.active-light label.primary-form-element,
+input.primary-form-element:focus + label.primary-form-element {
+  top: -12px;
+  font-size: 16px;
+  color: unset;
+  left: 10px;
+  background-color: white;
+  padding: 0 5px;
+  font-weight: 400;
+}
+
+span.login {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  font-size: 20px;
+  cursor: pointer;
+}
