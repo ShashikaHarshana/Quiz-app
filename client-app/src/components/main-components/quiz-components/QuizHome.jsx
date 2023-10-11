@@ -44,12 +44,12 @@ export default function QuizHome({ isDark }) {
   return (
     <div className="quiz-container">
       <section>
-        <Text>Quiz Management System</Text>
+        <h3 className="quiz-management-header">Quiz Management System</h3>
       </section>
       <div className="quiz-type-container">
         {cardList.map((card) => (
-          <Card className="card" isPressable isHoverable variant="bordered">
-            <Card.Header>
+          <Card className="card quiz-guidelines-card" isPressable isHoverable variant="bordered">
+            <Card.Header className="quiz-container-card-title">
               <Text>{card.title}</Text>
             </Card.Header>
             <Card.Body>

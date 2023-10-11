@@ -169,6 +169,7 @@ section.center {
   max-width: 60vh;
   min-height: 20vh;
   text-align: center;
+  min-width: 350px;
 }
 
 .card-dark {
@@ -183,7 +184,6 @@ section.center {
 }
 .quiz-container {
   max-width: 80vw;
-  margin: 2rem auto;
 }
 
 .quiz-type-container {
@@ -204,4 +204,45 @@ section.center {
 .checked {
   display: block;
   background-color: #1f1f1f;
+}
+
+.quiz-management-header{
+  display: flex;
+  justify-content: center;
+  font-size: 36px;
+}
+
+.btn-container{
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.quiz-container-card-title{
+  font-size: 16px;
+  font-weight: 500;
+  justify-content: center;
+  display: flex;
+}
+.quiz-container-card-title p{
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.card-btn-container{
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+}
+
+.quiz-guidelines-card{
+ padding: 24px;
+ margin: 0;
+ justify-content: center;
+}
+
+.quiz-guidelines-card-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

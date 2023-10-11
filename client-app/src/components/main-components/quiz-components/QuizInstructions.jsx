@@ -23,17 +23,17 @@ export default function QuizInstructions() {
   };
 
   return (
-    <section>
-      <Card>
-        <Text>
-          {selectedQuizType === "mcq"
+    <section className="quiz-guidelines-card-container">
+      <Card className="card quiz-guidelines-card">
+        <Card.Header className="quiz-container-card-title">
+              <Text>{selectedQuizType === "mcq"
             ? "Multiple Choice Quiz Guidelines"
             : selectedQuizType === "dnd"
             ? "Drag and Drop Quiz Guidelines"
             : selectedQuizType === "wlc"
             ? "Weekly challenge Guidelines"
-            : null}
-        </Text>
+            : null}</Text>
+          </Card.Header>
         <ul>
           <li>1. You will be asked 05 Questions.</li>
           <li>2. 10 points for each correct answer.</li>
@@ -43,14 +43,15 @@ export default function QuizInstructions() {
           <li>4. Back Navigation is available.</li>
           <li>5. Results will be declared at the end of the quiz.</li>
         </ul>
+        <div className="card-btn-container">
+          <Button onPress={handlerBack} color="gradient" auto ghost>
+            Goback
+          </Button>
 
-        <Button onPress={handlerBack} color="gradient" auto ghost>
-          Goback
-        </Button>
-
-        <Button onPress={handler} color="gradient" auto ghost>
-          Start Quiz
-        </Button>
+          <Button onPress={handler} color="gradient" auto ghost>
+            Start Quiz
+          </Button>
+        </div>
       </Card>
       <div>
         <Modal

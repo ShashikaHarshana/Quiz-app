@@ -77,7 +77,7 @@ export default function QuestionPage() {
 
   return (
     <div className="container">
-      <p>
+      <p className="quiz-container-card-title">
         {common.selectedQuizType === "mcq"
           ? "Multiple Choice Questions"
           : common.selectedQuizType === "dnd"
@@ -85,11 +85,13 @@ export default function QuestionPage() {
           : null}
       </p>
 
-      <p>
-        Question {trace + 1} of {queue.length}
-      </p>
+    <div style={{display:"flex", justifyContent:"space-between"}}>
+        <p>
+          Question {trace + 1} of {queue.length}
+        </p>
 
-      <p>Difficulty: {queue[trace] && queue[trace].difficulty}</p>
+        <p>Difficulty: {queue[trace] && queue[trace].difficulty}</p>
+    </div>
 
       {/*Questions*/}
       {isLoading && <p>Loading....</p>}
@@ -103,7 +105,7 @@ export default function QuestionPage() {
           <WeeklyChallenges></WeeklyChallenges>
         ) : null)}
 
-      <div>
+      <div className="card-btn-container">
         <Button disabled={trace === 0} onPress={onPrev}>
           Previous
         </Button>
