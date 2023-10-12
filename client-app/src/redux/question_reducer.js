@@ -12,24 +12,27 @@ export const questionReducer = createSlice({
   },
   reducers: {
     startExamAction: (state) => {
-      const filteredQuestions = state.questions.filter((question) => {
-        if (
-          question.type === state.selectedQuizType &&
-          question.difficulty === state.selectedDifficulty
-        ) {
-          return question;
-        }
-      });
+      if (state.selectedQuizType === "wcl") {
+      } else {
+        const filteredQuestions = state.questions.filter((question) => {
+          if (
+            question.type === state.selectedQuizType &&
+            question.difficulty === state.selectedDifficulty
+          ) {
+            return question;
+          }
+        });
 
-      const shuffled = filteredQuestions.sort(function () {
-        return 0.5 - Math.random();
-      });
+        const shuffled = filteredQuestions.sort(function () {
+          return 0.5 - Math.random();
+        });
 
-      const selectedQuestions = shuffled.slice(0, 10);
-      return {
-        ...state,
-        queue: selectedQuestions,
-      };
+        const selectedQuestions = shuffled.slice(0, 10);
+        return {
+          ...state,
+          queue: selectedQuestions,
+        };
+      }
     },
     storeQuestions: (state, action) => {
       return {

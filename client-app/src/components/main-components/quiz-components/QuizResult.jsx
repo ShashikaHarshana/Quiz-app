@@ -24,9 +24,7 @@ export default function QuizResult({ isDark }) {
   useEffect(() => {});
 
   const answers = queue.map((element) => {
-    if (element.correctAnswerIndex) {
-      return element.correctAnswerIndex;
-    }
+    return element.correctAnswerIndex;
   });
   console.log(answers, "answers");
   console.log(queue, "queue");
@@ -34,6 +32,7 @@ export default function QuizResult({ isDark }) {
   const totalPoints = queue.length * 10;
   // const attempts = attempts_Number(result);
   const earnPoints = earnedPoints(answers, result, 10);
+  // const flagResult = flagResult(totalPoints, earnPoints);
 
   function onRestart() {
     // dispatch(resetAllAction());
@@ -73,21 +72,17 @@ export default function QuizResult({ isDark }) {
         </div>
         <div className="flex">
           <span style={{ fontSize: "18px", textAlign: "center" }}>
-            Total Attempts :{" "}
-          </span>
-          <span className="bold">{0}</span>
-        </div>
-        <div className="flex">
-          <span style={{ fontSize: "18px", textAlign: "center" }}>
             Total Points Earned :{" "}
           </span>
           <span className="bold">{earnPoints || 0}</span>
         </div>
         <div className="flex">
           <span style={{ fontSize: "18px", textAlign: "center" }}>
-            Quiz Result{" "}
+            Quiz Result :{" "}
           </span>
-          <span className="bold"></span>
+          <span className="bold">
+            {flagResult(totalPoints, earnPoints) ? "Passed" : "Failed"}
+          </span>
         </div>
       </div>
 

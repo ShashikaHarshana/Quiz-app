@@ -11,6 +11,7 @@ import * as ResultAction from "../../../redux/result_reducer.js";
 
 export default function Questions({ onChecked }) {
   const [checked, setChecked] = useState(undefined);
+  const [checkIndex, setCheckIndex] = useState(undefined);
 
   const { queue, trace } = useSelector((state) => state.questions);
   const question = queue[trace];
@@ -22,15 +23,17 @@ export default function Questions({ onChecked }) {
   //     (state) => state.questions.queue[state.questions.trace]
   //   );
   const dispatch = useDispatch();
+  const radioBtn = document.querySelector("#email");
 
   useEffect(() => {
     console.log({ trace, checked });
-    dispatch(ResultAction.updateResultAction({ trace, checked }));
-  }, [checked]);
+    dispatch(ResultAction.updateResultAction({ trace, checkIndex }));
+  }, [checkIndex]);
 
   function onSelect(index) {
     onChecked(index);
-    setChecked(index);
+    setChecked(true);
+    setCheckIndex(index);
     console.log(index);
     //   dispatch(updateResult({ trace, checked }));
   }
@@ -53,8 +56,11 @@ export default function Questions({ onChecked }) {
                 className={`check ${result[trace] === index ? "checked" : ""}`}
               >
                 <input
+                  checked={
+                    result[trace] && result[trace] === index ? true : false
+                  }
                   type="radio"
-                  value={checked}
+                  value={false}
                   name="options"
                   id={`q${index}-options`}
                   onChange={() => onSelect(index)}

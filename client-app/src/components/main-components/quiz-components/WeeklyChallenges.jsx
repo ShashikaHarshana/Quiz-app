@@ -9,10 +9,10 @@ import data from "./data-base";
 import Questions from "./Questions";
 import DragnDrop from "./DragnDrop";
 import { Button } from "@nextui-org/react";
+import ChallengeTimer from "./ChallengeTimer";
 
 const WeeklyChallenges = () => {
   const result = useSelector((state) => state.result.result);
-  const common = useSelector((state) => state.common);
   const { queue, trace } = useSelector((state) => state.questions);
   const dispatch = useDispatch();
   const [check, setChecked] = useState(undefined);
@@ -69,10 +69,11 @@ const WeeklyChallenges = () => {
 
   return (
     <div className="container">
+      <ChallengeTimer></ChallengeTimer>
       <p>
-        {common.selectedQuizType === "mcq"
+        {selectedQuizType === "mcq"
           ? "Multiple Choice Questions"
-          : common.selectedQuizType === "dnd"
+          : selectedQuizType === "dnd"
           ? "Drag and Drop Questions"
           : null}
       </p>
