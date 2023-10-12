@@ -32,12 +32,7 @@ export default function Body({ isDark }) {
           path="/formElements"
           element={<FormElements isDark={isDark} />}
         />
-        <Route path="/quizzes" element={<Quiz isDark={isDark} />} />
-        <Route path="/quizzes/mcq" element={<Questions isDark={isDark} />} />
-        <Route
-          path="/quizzes/mcq/AddMcq"
-          element={<AddMcq isDark={isDark} />}
-        />
+        <Route path="/quizzes" element={<Questions isDark={isDark} />} />
       </Routes>
     </div>
   );
