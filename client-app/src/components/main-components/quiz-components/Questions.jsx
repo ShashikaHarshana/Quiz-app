@@ -42,26 +42,27 @@ export default function Questions({ onChecked }) {
   return (
     <div className="questions">
       <h2 className="text-light">
-        {trace + 1} . {question.question}
+        {trace + 1} . {question && question.title}
       </h2>
-      <ul key={question.id}>
-        {question.options.map((question, index) => {
-          return (
-            <li
-              key={index}
-              className={`check ${result[trace] === index ? "checked" : ""}`}
-            >
-              <input
-                type="radio"
-                value={checked}
-                name="options"
-                id={`q${index}-options`}
-                onChange={() => onSelect(index)}
-              />
-              <label htmlFor={`q${index}-options`}>{question}</label>
-            </li>
-          );
-        })}
+      <ul key={question && question.id}>
+        {question &&
+          question.answers.map((question, index) => {
+            return (
+              <li
+                key={index}
+                className={`check ${result[trace] === index ? "checked" : ""}`}
+              >
+                <input
+                  type="radio"
+                  value={checked}
+                  name="options"
+                  id={`q${index}-options`}
+                  onChange={() => onSelect(index)}
+                />
+                <label htmlFor={`q${index}-options`}>{question}</label>
+              </li>
+            );
+          })}
       </ul>
     </div>
   );

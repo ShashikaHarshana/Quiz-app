@@ -2,17 +2,64 @@ import "./Quiz.css";
 import { Card, Text, Button } from "@nextui-org/react";
 import { Modal, Input, Row, Checkbox } from "@nextui-org/react";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import Questions from "./Questions";
 import QuestionPage from "./QuestionPage";
+import * as Actions from "../../../redux/question_reducer";
+import { useEffect } from "react";
+
+const instructions = [
+  {
+    type: "mcq",
+    header: "Multiple Choice Questions",
+    guideLines: [
+      "You will be asked 10 Questions.",
+      "10 points for each correct answer.",
+      "Each question has 4 options. You can select only one option.",
+      "Back Navigation is available.",
+      "Results will be declared at the end of the quiz.",
+    ],
+    btn: "Start Quiz",
+  },
+  {
+    type: "dnd",
+    header: "Drag and Drop Questions",
+    guideLines: [
+      "This quiz consists of 10 drag and drop questions.",
+      "10 points for each correct answer.",
+      "To select an answer, click and hold your mouse button (or tap and hold if on a touch device) on the answer choice you want to use. Drag it to the appropriate question box and release the mouse button (or lift your finger) to drop it.",
+      "You can change your answers by simply dragging an answer choice to a different question box.",
+      "There is no time limit, so you can complete the quiz at your own pace.",
+      "Once all questions are answered, click 'Finish' to see your final score.",
+    ],
+    btn: "Start Quiz",
+  },
+  {
+    type: "wlc",
+    header: "Weekly Challenge",
+    guideLines: [
+      "The weekly challenge consists of 10 questions, including both MCQ’s and Drag and drop questions.",
+      "Read each question and the answer choices carefully. Results will be displayed once you submit.",
+      "Each question has 4 options. You can select only one option.",
+      "Back Navigation is disabled.",
+      "You will have a specific time limit to complete the quiz. Be mindful of the timer in the top right corner.",
+      "Results will be shown at the end of the Challenge",
+    ],
+    btn: "Start Challenge",
+  },
+];
 
 export default function QuizInstructions() {
-  const { selectedQuizType } = useSelector((state) => state.common);
+  const { selectedQuizType } = useSelector((state) => state.questions);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [visible, setVisible] = useState(false);
-  const handler = () => setVisible(true);
+  const handler = () => {
+    dispatch(Actions.startExamAction());
+    setVisible(true);
+  };
   const closeHandler = () => {
     // setVisible(false);
     console.log("closed");
@@ -21,6 +68,14 @@ export default function QuizInstructions() {
   const handlerBack = () => {
     navigate("/quiz/home");
   };
+
+  useEffect(() => {}, []);
+
+  const instruction = instructions.filter((element) => {
+    if (element.type === selectedQuizType) {
+      return element;
+    }
+  })[0];
 
   return (
     <section>
@@ -34,22 +89,19 @@ export default function QuizInstructions() {
             ? "Weekly challenge Guidelines"
             : null}
         </Text>
-        <ul>
-          <li>1. You will be asked 05 Questions.</li>
-          <li>2. 10 points for each correct answer.</li>
-          <li>
-            3. Each question has 3 options. You can select only one option.
-          </li>
-          <li>4. Back Navigation is available.</li>
-          <li>5. Results will be declared at the end of the quiz.</li>
-        </ul>
+        <ol>
+          {instruction.guideLines &&
+            instruction.guideLines.map((line, index) => (
+              <li key={index}>{line}</li>
+            ))}
+        </ol>
 
         <Button onPress={handlerBack} color="gradient" auto ghost>
-          Goback
+          Go Back
         </Button>
 
         <Button onPress={handler} color="gradient" auto ghost>
-          Start Quiz
+          {instruction.btn}
         </Button>
       </Card>
       <div>

@@ -40,22 +40,25 @@ const DragnDrop = ({ onChecked }) => {
     <>
       <h2>{question.question}</h2>
       <div className="page" onDrop={handleOnDrop} onDragOver={handleDragOver}>
-        <div className="dropped-widget">{question.options[widget]}</div>
+        <div className="dropped-widget">
+          {question.answers && question.answers[widget]}
+        </div>
       </div>
       <div>
         <div className="widgets">
-          {question.options.map((option, index) => (
-            <div
-              key={index}
-              draggable
-              onDragStart={(e) => {
-                handleDrag(e, index);
-              }}
-              className="widget"
-            >
-              {option}
-            </div>
-          ))}
+          {question.answers &&
+            question.answers.map((option, index) => (
+              <div
+                key={index}
+                draggable
+                onDragStart={(e) => {
+                  handleDrag(e, index);
+                }}
+                className="widget"
+              >
+                {option}
+              </div>
+            ))}
         </div>
       </div>
     </>

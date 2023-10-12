@@ -38,7 +38,7 @@ const WeeklyChallenges = () => {
       //   throw new Error();
       // }
 
-      dispatch(Action.startExamAction(data));
+      dispatch(Action.startExamAction());
       setIsLoading(false);
     } catch (error) {
       console.error("Error fetching questions:", error);
@@ -59,12 +59,6 @@ const WeeklyChallenges = () => {
     if (trace === queue.length - 1) {
       navigate("/quiz/results");
       dispatch(Action.resetAllAction());
-    }
-  }
-
-  function onPrev() {
-    if (trace > 0) {
-      dispatch(Action.movePrevAction());
     }
   }
 
@@ -100,10 +94,6 @@ const WeeklyChallenges = () => {
         ) : null)}
 
       <div>
-        <Button disabled={trace === 0} onPress={onPrev}>
-          Previous
-        </Button>
-
         <Button onPress={onNext}>
           {trace < queue.length - 1 ? "Next" : "Finish"}
         </Button>
