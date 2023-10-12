@@ -38,7 +38,7 @@ const DragnDrop = ({ onChecked }) => {
 
   return (
     <>
-      <h2>{question.question}</h2>
+      <h3>{question.question}</h3>
       <div className="page" onDrop={handleOnDrop} onDragOver={handleDragOver}>
         <div className="dropped-widget">{question.options[widget]}</div>
       </div>

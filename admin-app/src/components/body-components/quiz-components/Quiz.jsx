@@ -45,7 +45,7 @@ export default function Quiz({ isDark }) {
         >
           <Card.Body>
             <p size={20} css={{ fontWeight: "$bold" }}>
-              Multiple Choice Questions ececf
+              Multiple Choice Questions
             </p>
           </Card.Body>
         </Card>

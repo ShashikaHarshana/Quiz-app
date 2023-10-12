@@ -105,7 +105,7 @@ export default function QuestionPage() {
           <WeeklyChallenges></WeeklyChallenges>
         ) : null)}
 
-      <div className="card-btn-container">
+      <div className="card-btn-container next-prev-btn-container">
         <Button disabled={trace === 0} onPress={onPrev}>
           Previous
         </Button>

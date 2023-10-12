@@ -41,9 +41,9 @@ export default function Questions({ onChecked }) {
 
   return (
     <div className="questions">
-      <h2 className="text-light">
+      <h3 className="text-light">
         {trace + 1} . {question.question}
-      </h2>
+      </h3>
       <ul key={question.id}>
         {question.options.map((question, index) => {
           return (
