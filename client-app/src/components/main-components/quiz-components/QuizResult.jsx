@@ -74,64 +74,69 @@ export default function QuizResult({ isDark }) {
 
   return (
     <div className="container">
-      <center>
-        <h1 className="title text-light"></h1>
-      </center>
-      <Card className="card">
-        <Card.Header className="quiz-container-card-title">
-          <Text>Results</Text>
-        </Card.Header>
-        <Card.Body>
-          <div className="flex">
-            <span style={{ fontSize: "18px", textAlign: "center" }}>
-              Total Quiz Points :{" "}
-            </span>
-            <span className="bold">{totalPoints || 0}</span>
-          </div>
+      <div ref={pdfRef}>
+        <center>
+          <h1 className="title text-light"></h1>
+        </center>
+        <Card className="card">
+          <Card.Header className="quiz-container-card-title">
+            <Text>Results</Text>
+          </Card.Header>
+          <Card.Body>
+            <div className="flex">
+              <span style={{ fontSize: "18px", textAlign: "center" }}>
+                Total Quiz Points :{" "}
+              </span>
+              <span className="bold">{totalPoints || 0}</span>
+            </div>
 
-          <div className="flex">
-            <span style={{ fontSize: "18px", textAlign: "center" }}>
-              Total Questions :{" "}
-            </span>
-            <span className="bold">{queue.length || 0}</span>
-          </div>
+            <div className="flex">
+              <span style={{ fontSize: "18px", textAlign: "center" }}>
+                Total Questions :{" "}
+              </span>
+              <span className="bold">{queue.length || 0}</span>
+            </div>
 
-          <div className="flex">
-            <span style={{ fontSize: "18px", textAlign: "center" }}>
-              Total Points Earned :{" "}
-            </span>
-            <span className="bold">{earnPoints || 0}</span>
-          </div>
+            <div className="flex">
+              <span style={{ fontSize: "18px", textAlign: "center" }}>
+                Total Points Earned :{" "}
+              </span>
+              <span className="bold">{earnPoints || 0}</span>
+            </div>
 
-          <div className="flex">
-            <span style={{ fontSize: "18px", textAlign: "center" }}>
-              Quiz Result{" "}
-            </span>
-            <span
-              style={{
-                color: `${
-                  flagResult(totalPoints, earnPoints) ? "#2aff95" : "#ff2a66"
-                }`,
-              }}
-              className="bold"
-            >
-              {flagResult(totalPoints, earnPoints) ? "Passed" : "Failed"}
-            </span>
-          </div>
+            <div className="flex">
+              <span style={{ fontSize: "18px", textAlign: "center" }}>
+                Quiz Result{" "}
+              </span>
+              <span
+                style={{
+                  color: `${
+                    flagResult(totalPoints, earnPoints) ? "#2aff95" : "#ff2a66"
+                  }`,
+                }}
+                className="bold"
+              >
+                {flagResult(totalPoints, earnPoints) ? "Passed" : "Failed"}
+              </span>
+            </div>
+          </Card.Body>
+        </Card>
+      </div>
+      <Button
+        style={{ marginTop: "24px" }}
+        auto
+        ghost
+        onClick={() => {
+          navigate("/quiz/home");
+          dispatch(ResultAction.resetResultAction());
+        }}
+      >
+        Back to Quiz page
+      </Button>
 
-          <Button
-            style={{ marginTop: "24px" }}
-            auto
-            ghost
-            onClick={() => {
-              navigate("/quiz/home");
-              dispatch(ResultAction.resetResultAction());
-            }}
-          >
-            Back to Quiz page
-          </Button>
-        </Card.Body>
-      </Card>
+      <Button style={{ marginTop: "24px" }} auto ghost onPress={handleDownload}>
+        Download Pdf
+      </Button>
     </div>
   );
 }

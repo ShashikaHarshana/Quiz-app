@@ -91,29 +91,31 @@ export default function QuizInstructions() {
     <section className="quiz-guidelines-card-container">
       <Card className="card quiz-guidelines-card">
         <Card.Header className="quiz-container-card-title">
-              <Text>{selectedQuizType === "mcq"
-            ? "Multiple Choice Quiz Guidelines"
-            : selectedQuizType === "dnd"
-            ? "Drag and Drop Quiz Guidelines"
-            : selectedQuizType === "wlc"
-            ? "Weekly challenge Guidelines"
-            : null}
-        </Text>
-        <ol>
-          {instruction &&
-            instruction.guideLines &&
-            instruction.guideLines.map((line, index) => (
-              <li key={index}>{line}</li>
-            ))}
-        </ol>
+          <Text>
+            {selectedQuizType === "mcq"
+              ? "Multiple Choice Quiz Guidelines"
+              : selectedQuizType === "dnd"
+              ? "Drag and Drop Quiz Guidelines"
+              : selectedQuizType === "wlc"
+              ? "Weekly challenge Guidelines"
+              : null}
+          </Text>
+          <ol>
+            {instruction &&
+              instruction.guideLines &&
+              instruction.guideLines.map((line, index) => (
+                <li key={index}>{line}</li>
+              ))}
+          </ol>
 
-        <Button onPress={handlerBack} color="gradient" auto ghost>
-          Go Back
-        </Button>
+          <Button onPress={handlerBack} color="gradient" auto ghost>
+            Go Back
+          </Button>
 
-        <Button onPress={handler} color="gradient" auto ghost>
-          {instruction.btn}
-        </Button>
+          <Button onPress={handler} color="gradient" auto ghost>
+            {instruction.btn}
+          </Button>
+        </Card.Header>
       </Card>
       <div>
         <Modal
