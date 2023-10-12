@@ -33,10 +33,6 @@ export default function Body({ isDark }) {
           element={<FormElements isDark={isDark} />}
         />
         <Route path="/quizzes" element={<Questions isDark={isDark} />} />
-        <Route
-          path="/quizzes/mcq/AddMcq"
-          element={<AddMcq isDark={isDark} />}
-        />
       </Routes>
     </div>
   );
