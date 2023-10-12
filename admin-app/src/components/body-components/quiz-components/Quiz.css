@@ -113,3 +113,33 @@ span.login {
   font-size: 20px;
   cursor: pointer;
 }
+.available-question-card{
+  width: inherit;
+  height: inherit;
+  background: white;
+  transform: translateY(0);
+  filter: none;
+  cursor: auto;
+}
+
+.available-question-card-body .nextui-table-container{
+  border: 1px solid #e2e2e2;
+  box-shadow: none;
+  margin-bottom: 20px;
+}
+
+.dark-theme .available-question-card-body .nextui-table-container{
+  border: 1px solid #4e4e4e;
+}
+
+.dark-theme .available-question-card{
+  background: #060606;
+}
+
+.nextui-table-cell{
+  border-bottom: 1px solid #e2e2e2;
+}
+
+.dark-theme .nextui-table-cell{
+  border-bottom: 1px solid #4e4e4e;
+}

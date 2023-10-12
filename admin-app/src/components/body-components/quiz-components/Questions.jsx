@@ -9,6 +9,7 @@ import {
   Text,
   Button,
   Dropdown,
+  Card,
 } from "@nextui-org/react";
 
 import { Modal, Input, Checkbox } from "@nextui-org/react";
@@ -197,7 +198,7 @@ const Questions = () => {
       const response = await axios.delete(
         `http://localhost:5000/adminApp/quizzes/questions/${currentQuestionId}`
       );
-    } catch (error) {}
+    } catch (error) { }
     closeConfirmationHandler();
     fetchQuestions();
   };
@@ -286,49 +287,44 @@ const Questions = () => {
   };
   return (
     <div>
-      <Text>Available Questions</Text>
       <div>
-        <Table
-          aria-label="Example table with custom cells"
-          css={{
-            height: "auto",
-            minWidth: "100%",
-          }}
-          selectionMode="none"
-        >
-          <Table.Header columns={columns}>
-            {(column) => (
-              <Table.Column
-                key={column.uid}
-                hideHeader={column.uid === "actions"}
-                align={column.uid === "actions" ? "center" : "start"}
-              >
-                {column.name}
-              </Table.Column>
-            )}
-          </Table.Header>
-          <Table.Body items={questions}>
-            {(item) => (
-              <Table.Row>
-                {(columnKey) => (
-                  <Table.Cell>{renderCell(item, columnKey)}</Table.Cell>
+        <Card className="card available-question-card" isPressable isHoverable variant="bordered">
+          <Card.Header className="quiz-container-card-title">
+            <Text>Available Questions</Text>
+          </Card.Header>
+          <Card.Body className="available-question-card-body">
+            <Table aria-label="Example table with custom cells" css={{ height: "auto", minWidth: "100%"}} selectionMode="none">
+              <Table.Header columns={columns}>
+                {(column) => (
+                  <Table.Column key={column.uid} hideHeader={column.uid === "actions"} align={column.uid === "actions" ? "center" : "start"} >
+                    {column.name}
+                  </Table.Column>
                 )}
-              </Table.Row>
-            )}
-          </Table.Body>
-          <Table.Pagination
-            shadow
-            noMargin
-            align="center"
-            rowsPerPage={3}
-            onPageChange={(page) => console.log({ page })}
-          />
-        </Table>
-      </div>
-      <div className="btn">
-        <Button color="gradient" onPress={handleAddQuestions}>
-          Add Questions
-        </Button>
+              </Table.Header>
+              <Table.Body items={questions}>
+                {(item) => (
+                  <Table.Row>
+                    {(columnKey) => (
+                      <Table.Cell>{renderCell(item, columnKey)}</Table.Cell>
+                    )}
+                  </Table.Row>
+                )}
+              </Table.Body>
+              <Table.Pagination
+                shadow
+                noMargin
+                align="center"
+                rowsPerPage={3}
+                onPageChange={(page) => console.log({ page })}
+              />
+            </Table>
+            <div className="btn" style={{display:"flex", justifyContent:"flex-end"}}>
+              <Button onPress={handleAddQuestions}>
+                Add Questions
+              </Button>
+            </div>
+          </Card.Body>
+        </Card>
       </div>
 
       <form>
@@ -352,7 +348,7 @@ const Questions = () => {
               label="Question Title"
               onChange={(e) => setTitle(e.target.value)}
             />
-            <div>
+            <div style={{display:"flex", flexDirection:"column", gap:"16px"}}>
               <Input
                 clearable
                 bordered
@@ -435,14 +431,12 @@ const Questions = () => {
             <Dropdown>
               <Dropdown.Button
                 flat
-                color="secondary"
                 css={{ tt: "capitalize" }}
               >
                 {selectedTypeValue}
               </Dropdown.Button>
               <Dropdown.Menu
                 aria-label="Single selection actions"
-                color="secondary"
                 disallowEmptySelection
                 selectionMode="single"
                 selectedKeys={selectedType}
@@ -456,14 +450,12 @@ const Questions = () => {
             <Dropdown>
               <Dropdown.Button
                 flat
-                color="secondary"
                 css={{ tt: "capitalize" }}
               >
                 {selectedDifficultyValue}
               </Dropdown.Button>
               <Dropdown.Menu
                 aria-label="Single selection actions"
-                color="secondary"
                 disallowEmptySelection
                 selectionMode="single"
                 selectedKeys={selectedDifficulty}
@@ -476,11 +468,11 @@ const Questions = () => {
             </Dropdown>
           </Modal.Body>
           <Modal.Footer>
-            <Row justify="space-between">
-              <Button auto flat color="error" onPress={closeHandler}>
+            <Row style={{display:"flex", gap:"16px"}}>
+              <Button auto flat color="error" onPress={closeHandler} style={{width:"100%"}}>
                 cancel
               </Button>
-              <Button auto type="submit" onPress={handleFormSubmit}>
+              <Button auto type="submit" onPress={handleFormSubmit} style={{width:"100%"}}>
                 {btnType === "add" ? "Submit" : "Edit"}
               </Button>
             </Row>
