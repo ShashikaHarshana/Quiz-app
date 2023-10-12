@@ -149,12 +149,13 @@ const Questions = () => {
 
   useEffect(() => {
     fetchQuestions();
-  }, [questions]);
+  }, []);
 
   const fetchQuestions = async () => {
     try {
       const availableQuestions = await axios.get(
-        "http://localhost:5000/adminApp/quizzes/questions/"
+        "http://localhost:5000/adminApp/quizzes/questions/",
+        {}
       );
       if (availableQuestions.data) {
         // setQuestions(availableQuestions);
@@ -315,6 +316,13 @@ const Questions = () => {
               </Table.Row>
             )}
           </Table.Body>
+          <Table.Pagination
+            shadow
+            noMargin
+            align="center"
+            rowsPerPage={3}
+            onPageChange={(page) => console.log({ page })}
+          />
         </Table>
       </div>
       <div className="btn">
