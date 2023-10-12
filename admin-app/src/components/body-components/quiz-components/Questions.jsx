@@ -260,7 +260,7 @@ const Questions = () => {
 
       case "actions":
         return (
-          <Row justify="center" align="center">
+          <Row justify="center" align="center" style={{gap:"20px"}}>
             <Col css={{ d: "flex" }}>
               <Tooltip content="Edit question">
                 <IconButton onClick={() => handleEditClick(questions.id)}>
@@ -289,8 +289,13 @@ const Questions = () => {
     <div>
       <div>
         <Card className="card available-question-card" isPressable isHoverable variant="bordered">
-          <Card.Header className="quiz-container-card-title">
-            <Text>Available Questions</Text>
+          <Card.Header className="quiz-container-card-title" style={{justifyContent:"space-between"}}>
+            <h3>Available Questions</h3>
+            <div className="btn" style={{display:"flex", justifyContent:"flex-end"}}>
+              <Button onPress={handleAddQuestions}>
+                Add Questions
+              </Button>
+            </div>
           </Card.Header>
           <Card.Body className="available-question-card-body">
             <Table aria-label="Example table with custom cells" css={{ height: "auto", minWidth: "100%"}} selectionMode="none">
@@ -318,11 +323,6 @@ const Questions = () => {
                 onPageChange={(page) => console.log({ page })}
               />
             </Table>
-            <div className="btn" style={{display:"flex", justifyContent:"flex-end"}}>
-              <Button onPress={handleAddQuestions}>
-                Add Questions
-              </Button>
-            </div>
           </Card.Body>
         </Card>
       </div>
