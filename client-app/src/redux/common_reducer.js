@@ -5,10 +5,6 @@ export const commonReducer = createSlice({
   name: "common",
   initialState: {
     isDarkMode: false,
-    isLoggedIn: false,
-    selectedQuizType: "",
-    selectedDifficulty: "",
-    user: "",
   },
   reducers: {
     changeToDarkMode: (state) => {
@@ -21,18 +17,6 @@ export const commonReducer = createSlice({
       return {
         ...state,
         isDarkMode: false,
-      };
-    },
-    setQuizType: (state, action) => {
-      return {
-        ...state,
-        selectedQuizType: action.payload,
-      };
-    },
-    setQuizDifficulty: (state, action) => {
-      return {
-        ...state,
-        selectedDifficulty: action.payload,
       };
     },
   },

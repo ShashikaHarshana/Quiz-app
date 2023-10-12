@@ -12,28 +12,48 @@ export const questionReducer = createSlice({
   },
   reducers: {
     startExamAction: (state) => {
-      if (state.selectedQuizType === "wcl") {
-      } else {
-        const filteredQuestions = state.questions.filter((question) => {
-          if (
-            question.type === state.selectedQuizType &&
-            question.difficulty === state.selectedDifficulty
-          ) {
-            return question;
-          }
-        });
-
-        const shuffled = filteredQuestions.sort(function () {
+      const filteredQuestions = state.questions.filter((question) => {
+        if (
+          question.type === state.selectedQuizType &&
+          question.difficulty === state.selectedDifficulty
+        ) {
+          return question;
+        }
+      });
+      let shuffled;
+      if (state.selectedQuizType === "wlc") {
+        shuffled = state.questions.sort(function () {
           return 0.5 - Math.random();
         });
-
-        const selectedQuestions = shuffled.slice(0, 10);
-        return {
-          ...state,
-          queue: selectedQuestions,
-        };
+      } else {
+        shuffled = filteredQuestions.sort(function () {
+          return 0.5 - Math.random();
+        });
       }
+
+      const selectedQuestions = shuffled.slice(0, 10);
+
+      return {
+        ...state,
+        queue: selectedQuestions,
+      };
     },
+    startWeeklyChallenge: (state) => {
+      const filteredQuestions = state.questions.filter((question) => {
+        return question;
+      });
+      const shuffled = filteredQuestions.sort(function () {
+        return 0.5 - Math.random();
+      });
+
+      const selectedQuestions = shuffled.slice(0, 10);
+
+      return {
+        ...state,
+        queue: selectedQuestions,
+      };
+    },
+
     storeQuestions: (state, action) => {
       return {
         ...state,
@@ -76,6 +96,7 @@ export const {
   resetAllAction,
   storeQuestions,
   setQuestionTypeAndDifficulty,
+  startWeeklyChallenge,
 } = questionReducer.actions;
 
 export default questionReducer.reducer;

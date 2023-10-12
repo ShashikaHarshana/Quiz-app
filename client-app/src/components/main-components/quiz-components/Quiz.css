@@ -186,6 +186,12 @@ section.center {
   margin: 2rem auto;
 }
 
+.results-container {
+  width: 60vw;
+  height: auto;
+  margin: 5rem auto;
+}
+
 .quiz-type-container {
   display: flex;
   max-width: 100vw;
@@ -199,58 +205,4 @@ section.center {
   border: #1f1f1f solid 2px;
   min-width: 2rem;
   min-height: 2rem;
-}
-
-ul li .check {
-  display: block;
-  position: absolute;
-  border: 5px solid #aaaaaa;
-  border-radius: 100%;
-  height: 25px;
-  width: 25px;
-  top: 30px;
-  left: 20px;
-  z-index: 5;
-  transition: border 0.25s linear;
-  -webkit-transition: border 0.25s linear;
-}
-
-ul li:hover .checked {
-  border: 5px solid #ffffff;
-}
-
-ul li .check::before {
-  display: block;
-  position: absolute;
-  content: "";
-  border-radius: 100%;
-  height: 15px;
-  width: 15px;
-  top: 5px;
-  left: 5px;
-  margin: auto;
-}
-
-input[type="radio"]:checked ~ .check {
-  border: 5px solid #0dff92;
-}
-
-input[type="radio"]:checked ~ .check::before {
-  background: #0dff92;
-}
-
-input[type="radio"]:checked ~ .text-primary {
-  color: #0dff92;
-}
-
-/* input[type="radio"] {
-  visibility: hidden;
-} */
-
-.checked {
-  border: 5px solid #0dff92 !important;
-}
-
-.checked::before {
-  background: #0dff92;
 }

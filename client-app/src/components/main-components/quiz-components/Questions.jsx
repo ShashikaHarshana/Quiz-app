@@ -13,7 +13,9 @@ export default function Questions({ onChecked }) {
   const [checked, setChecked] = useState(undefined);
   const [checkIndex, setCheckIndex] = useState(undefined);
 
-  const { queue, trace } = useSelector((state) => state.questions);
+  const { queue, trace, selectedQuizType } = useSelector(
+    (state) => state.questions
+  );
   const question = queue[trace];
 
   const result = useSelector((state) => state.result.result);
@@ -44,32 +46,35 @@ export default function Questions({ onChecked }) {
 
   return (
     <div className="questions">
-      <h2 className="text-light">
-        {trace + 1} . {question && question.title}
-      </h2>
-      <ul key={question && question.id}>
-        {question &&
-          question.answers.map((question, index) => {
-            return (
-              <li
-                key={index}
-                className={`check ${result[trace] === index ? "checked" : ""}`}
-              >
-                <input
-                  checked={
-                    result[trace] && result[trace] === index ? true : false
-                  }
-                  type="radio"
-                  value={false}
-                  name="options"
-                  id={`q${index}-options`}
-                  onChange={() => onSelect(index)}
-                />
-                <label htmlFor={`q${index}-options`}>{question}</label>
-              </li>
-            );
-          })}
-      </ul>
+      {queue[trace].type === "mcq" && (
+        <div>
+          <h2 className="text-light">
+            {trace + 1} . {question && question.title}
+          </h2>
+          <ul key={question && question.id}>
+            {question &&
+              question.answers.map((question, index) => {
+                return (
+                  <li
+                    key={index}
+                    className={`check ${
+                      result[trace] === index ? "checked" : ""
+                    }`}
+                  >
+                    <input
+                      type="radio"
+                      value={false}
+                      name="options"
+                      id={`q${index}-options`}
+                      onChange={() => onSelect(index)}
+                    />
+                    <label htmlFor={`q${index}-options`}>{question}</label>
+                  </li>
+                );
+              })}
+          </ul>
+        </div>
+      )}
     </div>
   );
 }

@@ -7,7 +7,9 @@ import { useState } from "react";
 import Questions from "./Questions";
 import QuestionPage from "./QuestionPage";
 import * as Actions from "../../../redux/question_reducer";
+import * as ResultAction from "../../../redux/result_reducer";
 import { useEffect } from "react";
+import WeeklyChallenges from "./WeeklyChallenges";
 
 const instructions = [
   {
@@ -52,30 +54,38 @@ const instructions = [
 
 export default function QuizInstructions() {
   const { selectedQuizType } = useSelector((state) => state.questions);
+  const [instruction, setInstruction] = useState({});
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const [visible, setVisible] = useState(false);
   const handler = () => {
-    dispatch(Actions.startExamAction());
+    if (selectedQuizType === "wlc") {
+      dispatch(Actions.startWeeklyChallenge());
+    } else {
+      dispatch(Actions.startExamAction());
+    }
     setVisible(true);
   };
   const closeHandler = () => {
-    // setVisible(false);
-    console.log("closed");
+    setVisible(false);
+    dispatch(Actions.resetAllAction());
+    dispatch(ResultAction.resetResultAction());
+    navigate("/quiz/home");
   };
 
   const handlerBack = () => {
     navigate("/quiz/home");
   };
 
-  useEffect(() => {}, []);
-
-  const instruction = instructions.filter((element) => {
-    if (element.type === selectedQuizType) {
-      return element;
-    }
-  })[0];
+  useEffect(() => {
+    const filteredInstruction = instructions.filter((element) => {
+      if (element.type === selectedQuizType) {
+        return element;
+      }
+    })[0];
+    setInstruction(filteredInstruction);
+  }, []);
 
   return (
     <section>
@@ -90,7 +100,8 @@ export default function QuizInstructions() {
             : null}
         </Text>
         <ol>
-          {instruction.guideLines &&
+          {instruction &&
+            instruction.guideLines &&
             instruction.guideLines.map((line, index) => (
               <li key={index}>{line}</li>
             ))}
@@ -114,7 +125,11 @@ export default function QuizInstructions() {
           onClose={closeHandler}
         >
           <Modal.Body>
-            <QuestionPage></QuestionPage>
+            {selectedQuizType === "wlc" ? (
+              <WeeklyChallenges></WeeklyChallenges>
+            ) : (
+              <QuestionPage></QuestionPage>
+            )}{" "}
           </Modal.Body>
         </Modal>
       </div>

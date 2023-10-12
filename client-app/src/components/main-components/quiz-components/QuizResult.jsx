@@ -13,12 +13,19 @@ import {
   flagResult,
 } from "../../../helper/Helper";
 import "../quiz-components/Quiz.css";
+import { useState } from "react";
+import html2canvs from "html2canvas";
+import jsPDF from "jspdf";
+import { useRef } from "react";
 
 export default function QuizResult({ isDark }) {
+  const [loader, setLoader] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { queue } = useSelector((state) => state.questions);
+  const pdfRef = useRef();
+
+  const { queue, selectedQuizType } = useSelector((state) => state.questions);
   const { result } = useSelector((state) => state.result);
 
   useEffect(() => {});
@@ -38,54 +45,89 @@ export default function QuizResult({ isDark }) {
     // dispatch(resetAllAction());
     // dispatch(resetResultAction());
   }
+
+  const handleDownload = () => {
+    setLoader(true);
+    const input = pdfRef.current;
+    html2canvs(input).then((canvas) => {
+      const imgData = canvas.toDataURL("img/png");
+      const pdf = new jsPDF("p", "mm", "a4", true);
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = pdf.internal.pageSize.getHeight();
+      const imgWidth = canvas.width;
+      const imgHeight = canvas.height;
+      const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight);
+      const imgX = (pdfWidth - imgWidth * ratio) / 2;
+      const imgY = 30;
+      pdf.addImage(
+        imgData,
+        "PNG",
+        imgX,
+        imgY,
+        imgWidth * ratio,
+        imgHeight * ratio
+      );
+      pdf.save("quiz-resutl.pdf");
+      setLoader(false);
+    });
+  };
+
   return (
     <div className="container">
-      <center>
-        <h1 className="title text-light">Results</h1>
-      </center>
+      <div className="results-container" ref={pdfRef}>
+        <center>
+          <h1 className="title text-light">Results</h1>
+        </center>
 
-      <div
-        className={`card ${isDark ? "card-dark" : "card-light"}`}
-        style={{
-          maxWidth: "600px",
-          margin: "0 auto",
-          padding: "20px",
-          boxShadow: "0 0 10px rgba(0, 0, 0, 0.2)",
-          borderRadius: "5px",
-        }}
-      >
-        {/* <div className='flex'>
-                    <span style={{ fontSize: '20px'}}>Username</span>
-                    <span className='bold'>{userId}</span>
-                </div> */}
-        <div className="flex">
-          <span style={{ fontSize: "18px", textAlign: "center" }}>
-            Total Quiz Points :{" "}
-          </span>
-          <span className="bold">{totalPoints || 0}</span>
-        </div>
-        <div className="flex">
-          <span style={{ fontSize: "18px", textAlign: "center" }}>
-            Total Questions :{" "}
-          </span>
-          <span className="bold">{queue.length || 0}</span>
-        </div>
-        <div className="flex">
-          <span style={{ fontSize: "18px", textAlign: "center" }}>
-            Total Points Earned :{" "}
-          </span>
-          <span className="bold">{earnPoints || 0}</span>
-        </div>
-        <div className="flex">
-          <span style={{ fontSize: "18px", textAlign: "center" }}>
-            Quiz Result :{" "}
-          </span>
-          <span className="bold">
-            {flagResult(totalPoints, earnPoints) ? "Passed" : "Failed"}
-          </span>
+        <div
+          className={`card ${isDark ? "card-dark" : "card-light"}`}
+          style={{
+            maxWidth: "600px",
+            margin: "0 auto",
+            padding: "20px",
+            boxShadow: "0 0 10px rgba(0, 0, 0, 0.2)",
+            borderRadius: "5px",
+          }}
+        >
+          {/* <div className='flex'>
+        <span style={{ fontSize: '20px'}}>Username</span>
+        <span className='bold'>{userId}</span>
+      </div> */}
+          <div className="flex">
+            <span style={{ fontSize: "18px", textAlign: "center" }}>
+              Total Quiz Points :{" "}
+            </span>
+            <span className="bold">{totalPoints || 0}</span>
+          </div>
+          <div className="flex">
+            <span style={{ fontSize: "18px", textAlign: "center" }}>
+              Total Questions :{" "}
+            </span>
+            <span className="bold">{queue.length || 0}</span>
+          </div>
+          <div className="flex">
+            <span style={{ fontSize: "18px", textAlign: "center" }}>
+              Total Points Earned :{" "}
+            </span>
+            <span className="bold">{earnPoints || 0}</span>
+          </div>
+          <div className="flex">
+            <span style={{ fontSize: "18px", textAlign: "center" }}>
+              Quiz Result :{" "}
+            </span>
+            <span
+              style={{
+                color: `${
+                  flagResult(totalPoints, earnPoints) ? "#2aff95" : "#ff2a66"
+                }`,
+              }}
+              className="bold"
+            >
+              {flagResult(totalPoints, earnPoints) ? "Passed" : "Failed"}
+            </span>
+          </div>
         </div>
       </div>
-
       <Button
         color="gradient"
         auto
@@ -94,9 +136,21 @@ export default function QuizResult({ isDark }) {
           navigate("/quiz/home");
           dispatch(ResultAction.resetResultAction());
           dispatch(Action.resetAllAction());
+          if (selectedQuizType === "wlc") {
+            dispatch(ResultAction.updateWclChallengeAttempts());
+          }
         }}
       >
         Back to Quiz page
+      </Button>
+      <Button
+        onPress={handleDownload}
+        color="gradient"
+        auto
+        ghost
+        disabled={!(loader === false)}
+      >
+        {loader ? "Downloading " : "Download Result"}
       </Button>
     </div>
   );

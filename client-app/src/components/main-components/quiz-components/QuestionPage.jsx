@@ -78,9 +78,11 @@ export default function QuestionPage() {
       ) : null}
 
       <div>
-        <Button disabled={trace === 0} onPress={onPrev}>
-          Previous
-        </Button>
+        {selectedQuizType === "mcq" && (
+          <Button disabled={trace === 0} onPress={onPrev}>
+            Previous
+          </Button>
+        )}
 
         <Button onPress={onNext}>
           {trace < queue.length - 1 ? "Next" : "Finish"}

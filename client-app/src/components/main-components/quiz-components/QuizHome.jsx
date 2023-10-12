@@ -9,7 +9,7 @@ import {
   Button,
 } from "@nextui-org/react";
 import { Routes, Route, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useState } from "react";
 import axios from "axios";
@@ -19,6 +19,8 @@ export default function QuizHome({ isDark }) {
   const [isLoading, setIsLoading] = useState(true);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const { wclAttempts } = useSelector((state) => state.result);
 
   const handleOnpress = (quizType, difficulty) => {
     if (quizType) {
@@ -72,7 +74,9 @@ export default function QuizHome({ isDark }) {
   const handleCardPress = (type, difficulty) => {
     if (type === "wlc") {
       dispatch(Action.setQuestionTypeAndDifficulty({ type, difficulty }));
-      navigate("/quiz/instructions");
+      if (wclAttempts !== 3) {
+        navigate("/quiz/instructions");
+      }
     }
   };
 
@@ -97,7 +101,15 @@ export default function QuizHome({ isDark }) {
             <Card.Body>
               <div className="btn-container">
                 {card.title === "Weekly Challenge" && (
-                  <Text>Are you ready for this week's challenge? </Text>
+                  <div>
+                    <Text>
+                      {wclAttempts === 3
+                        ? "No more attempts left for this week challenge"
+                        : `Are you ready for this week's challenge? You have ${
+                            3 - wclAttempts
+                          } more attempts left...`}
+                    </Text>
+                  </div>
                 )}
                 {card.btns &&
                   card.btns.map((btn, i) => (
