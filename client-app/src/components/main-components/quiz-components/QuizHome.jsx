@@ -34,12 +34,12 @@ export default function QuizHome({ isDark }) {
   const cardList = [
     {
       title: "Multiple Choice Questions",
-      btns: ["beginner", "intermediate", "advanced"],
+      btns: ["Beginner", "Intermediate", "Advanced"],
       type: "mcq",
     },
     {
       title: "Drag and Drop Questions",
-      btns: ["beginner", "intermediate", "advanced"],
+      btns: ["Beginner", "Intermediate", "Advanced"],
       type: "dnd",
     },
     {
