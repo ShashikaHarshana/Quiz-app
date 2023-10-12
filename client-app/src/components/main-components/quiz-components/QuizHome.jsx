@@ -48,14 +48,24 @@ export default function QuizHome({ isDark }) {
       </section>
       <div className="quiz-type-container">
         {cardList.map((card) => (
-          <Card className="card quiz-guidelines-card" isPressable isHoverable variant="bordered">
+          <Card
+            className="card quiz-guidelines-card"
+            isPressable
+            isHoverable
+            variant="bordered"
+          >
             <Card.Header className="quiz-container-card-title">
               <Text>{card.title}</Text>
             </Card.Header>
             <Card.Body>
               <div className="btn-container">
                 {card.btns.map((btn) => (
-                  <Button onPress={() => handleOnpress(card.type, btn)}>
+                  <Button
+                    bordered
+                    auto
+                    ghost
+                    onPress={() => handleOnpress(card.type, btn)}
+                  >
                     {btn}
                   </Button>
                 ))}
