@@ -14,7 +14,6 @@ const createQuestion = async (req, res) => {
       difficulty,
     })
       .then((questions) => {
-        console.log(questions);
         res.status(200).json("question saved to db");
       })
       .catch(function (err) {
