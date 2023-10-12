@@ -16,11 +16,8 @@ app.use("/admin/tutorials", tutorialRoutes);
 app.use("/adminApp/quizzes", quizRoutes);
 
 const PORT = 5000;
-// const DB_URL =
-//   "mongodb+srv://CodePedia:Y3S1@cluster0.y81ww5h.mongodb.net/?retryWrites=true&w=majority";
-
 const DB_URL =
-  "mongodb+srv://admin:admin123@quiz.egeszm1.mongodb.net/?retryWrites=true&w=majority";
+  "mongodb+srv://CodePedia:Y3S1@cluster0.y81ww5h.mongodb.net/?retryWrites=true&w=majority";
 
 mongoose
   .connect(DB_URL)

@@ -1,15 +1,10 @@
 // controllers/questionController.js
 const Questions = require("../models/quizModel");
-const data = require("../data");
-
 // Create a new question
 const createQuestion = async (req, res) => {
   try {
     const { id, title, answers, correctAnswerIndex, type, difficulty } =
       req.body;
-    // const question = new Questions({ text, answers, correctAnswerIndex });
-    // await question.save();
-    // res.status(201).json(question);
     Questions.create({
       id,
       title,
@@ -20,10 +15,10 @@ const createQuestion = async (req, res) => {
     })
       .then((questions) => {
         console.log(questions);
-        res.json("question saved to db");
+        res.status(200).json("question saved to db");
       })
       .catch(function (err) {
-        res.json({ msg: err });
+        res.status(500).json({ msg: err });
       });
   } catch (error) {
     console.error("Error creating question:", error);
