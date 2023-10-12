@@ -186,6 +186,12 @@ section.center {
   max-width: 80vw;
 }
 
+.results-container {
+  width: 60vw;
+  height: auto;
+  margin: 5rem auto;
+}
+
 .quiz-type-container {
   display: flex;
   max-width: 100vw;
@@ -209,52 +215,52 @@ section.center {
   background-color: #1f1f1f;
 }
 
-.quiz-management-header{
+.quiz-management-header {
   display: flex;
   justify-content: center;
   font-size: 36px;
 }
 
-.btn-container{
+.btn-container {
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
 
-.quiz-container-card-title{
+.quiz-container-card-title {
   font-size: 16px;
   font-weight: 500;
   justify-content: center;
   display: flex;
 }
-.quiz-container-card-title p{
+.quiz-container-card-title p {
   font-size: 20px;
   font-weight: 500;
 }
 
-.card-btn-container{
+.card-btn-container {
   display: flex;
   gap: 16px;
   justify-content: center;
 }
 
-.quiz-guidelines-card{
- padding: 24px;
- margin: 0;
- justify-content: center;
+.quiz-guidelines-card {
+  padding: 24px;
+  margin: 0;
+  justify-content: center;
 }
 
-.quiz-guidelines-card-container{
+.quiz-guidelines-card-container {
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.next-prev-btn-container button{
+.next-prev-btn-container button {
   min-width: inherit;
   width: 100%;
 }
 
-.widgets{
+.widgets {
   cursor: move;
   display: flex;
   gap: 16px;

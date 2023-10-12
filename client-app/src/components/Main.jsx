@@ -11,6 +11,7 @@ import McqPage from "./main-components/quiz-components/QuestionPage";
 import McqResult from "./main-components/quiz-components/QuizResult";
 import DragnDrop from "./main-components/quiz-components/DragnDrop";
 import QuizInstructions from "./main-components/quiz-components/QuizInstructions";
+import WeeklyChallenges from "./main-components/quiz-components/WeeklyChallenges";
 
 export default function Main({ isDark }) {
   const [isLogin, setIsLogin] = useState(true);
@@ -47,7 +48,7 @@ export default function Main({ isDark }) {
           />
           <Route
             path="/quiz/weeklychallenge"
-            element={<weeklyChallenges isDark={isDark} />}
+            element={<WeeklyChallenges isDark={isDark} />}
           />
         </Routes>
       )}

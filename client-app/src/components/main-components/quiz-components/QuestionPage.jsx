@@ -18,34 +18,10 @@ export default function QuestionPage() {
 
   const result = useSelector((state) => state.result.result);
   const common = useSelector((state) => state.common);
-  const { queue, trace } = useSelector((state) => state.questions);
+  const { queue, trace, selectedQuizType, selectedDifficulty } = useSelector(
+    (state) => state.questions
+  );
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    // Fetch MCQ questions from the server when the component mounts
-    fetchQuestions();
-  }, []);
-
-  const fetchQuestions = async () => {
-    try {
-      setIsLoading(true);
-      // const response = await axios.get(
-      //   "http://localhost:5000/adminApp/questions/getAll"
-      // );
-
-      // if (response.data) {
-      //   dispatch(Action.startExamAction(data));
-      //   setIsLoading(false);
-      // } else {
-      //   throw new Error();
-      // }
-
-      dispatch(Action.startExamAction(data));
-      setIsLoading(false);
-    } catch (error) {
-      console.error("Error fetching questions:", error);
-    }
-  };
 
   function onNext() {
     if (trace < queue.length) {
@@ -60,7 +36,7 @@ export default function QuestionPage() {
     setChecked(undefined);
     if (trace === queue.length - 1) {
       navigate("/quiz/results");
-      dispatch(Action.resetAllAction());
+      // dispatch(Action.resetAllAction());
     }
   }
 
@@ -77,38 +53,38 @@ export default function QuestionPage() {
 
   return (
     <div className="container">
-      <p className="quiz-container-card-title">
-        {common.selectedQuizType === "mcq"
+      <p>
+        {selectedQuizType === "mcq"
           ? "Multiple Choice Questions"
-          : common.selectedQuizType === "dnd"
+          : selectedQuizType === "dnd"
           ? "Drag and Drop Questions"
           : null}
       </p>
 
-    <div style={{display:"flex", justifyContent:"space-between"}}>
+      <div style={{ display: "flex", justifyContent: "space-between" }}>
         <p>
           Question {trace + 1} of {queue.length}
         </p>
 
         <p>Difficulty: {queue[trace] && queue[trace].difficulty}</p>
-    </div>
+      </div>
 
       {/*Questions*/}
-      {isLoading && <p>Loading....</p>}
 
-      {!isLoading &&
-        (common.selectedQuizType === "mcq" ? (
-          <Questions onChecked={onChecked}></Questions>
-        ) : common.selectedQuizType === "dnd" ? (
-          <DragnDrop onChecked={onChecked}></DragnDrop>
-        ) : common.selectedQuizType === "wlc" ? (
-          <WeeklyChallenges></WeeklyChallenges>
-        ) : null)}
+      {selectedQuizType === "mcq" ? (
+        <Questions onChecked={onChecked}></Questions>
+      ) : selectedQuizType === "dnd" ? (
+        <DragnDrop onChecked={onChecked}></DragnDrop>
+      ) : selectedQuizType === "wlc" ? (
+        <WeeklyChallenges></WeeklyChallenges>
+      ) : null}
 
-      <div className="card-btn-container next-prev-btn-container">
-        <Button disabled={trace === 0} onPress={onPrev}>
-          Previous
-        </Button>
+      <div>
+        {selectedQuizType === "mcq" && (
+          <Button disabled={trace === 0} onPress={onPrev}>
+            Previous
+          </Button>
+        )}
 
         <Button onPress={onNext}>
           {trace < queue.length - 1 ? "Next" : "Finish"}

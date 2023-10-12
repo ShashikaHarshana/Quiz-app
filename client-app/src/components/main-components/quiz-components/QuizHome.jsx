@@ -9,16 +9,24 @@ import {
   Button,
 } from "@nextui-org/react";
 import { Routes, Route, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import * as Actions from "../../../redux/common_reducer";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useState } from "react";
+import axios from "axios";
+import * as Action from "../../../redux/question_reducer";
 
 export default function QuizHome({ isDark }) {
+  const [isLoading, setIsLoading] = useState(true);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const { wclAttempts } = useSelector((state) => state.result);
+
   const handleOnpress = (quizType, difficulty) => {
     if (quizType) {
-      dispatch(Actions.setQuizType(quizType));
+      dispatch(
+        Action.setQuestionTypeAndDifficulty({ type: quizType, difficulty })
+      );
     }
     navigate("/quiz/instructions");
   };
@@ -36,10 +44,41 @@ export default function QuizHome({ isDark }) {
     },
     {
       title: "Weekly Challenge",
-      btns: ["beginner", "intermediate", "advanced"],
       type: "wlc",
     },
   ];
+
+  useEffect(() => {
+    // Fetch MCQ questions from the server when the component mounts
+    fetchQuestions();
+  }, []);
+
+  const fetchQuestions = async () => {
+    try {
+      setIsLoading(true);
+      const response = await axios.get(
+        "http://localhost:5000/adminApp/quizzes/questions/",
+        {}
+      );
+      if (response.data) {
+        dispatch(Action.storeQuestions(response.data));
+        setIsLoading(false);
+      } else {
+        throw new Error();
+      }
+    } catch (error) {
+      console.error("Error fetching questions:", error);
+    }
+  };
+
+  const handleCardPress = (type, difficulty) => {
+    if (type === "wlc") {
+      dispatch(Action.setQuestionTypeAndDifficulty({ type, difficulty }));
+      if (wclAttempts !== 3) {
+        navigate("/quiz/instructions");
+      }
+    }
+  };
 
   return (
     <div className="quiz-container">
@@ -47,28 +86,40 @@ export default function QuizHome({ isDark }) {
         <h3 className="quiz-management-header">Quiz Management System</h3>
       </section>
       <div className="quiz-type-container">
-        {cardList.map((card) => (
+        {cardList.map((card, index) => (
           <Card
-            className="card quiz-guidelines-card"
+            className="card"
             isPressable
             isHoverable
             variant="bordered"
+            key={index}
+            onPress={() => handleCardPress(card.type, "advanced")}
           >
-            <Card.Header className="quiz-container-card-title">
+            <Card.Header>
               <Text>{card.title}</Text>
             </Card.Header>
             <Card.Body>
               <div className="btn-container">
-                {card.btns.map((btn) => (
-                  <Button
-                    bordered
-                    auto
-                    ghost
-                    onPress={() => handleOnpress(card.type, btn)}
-                  >
-                    {btn}
-                  </Button>
-                ))}
+                {card.title === "Weekly Challenge" && (
+                  <div>
+                    <Text>
+                      {wclAttempts === 3
+                        ? "No more attempts left for this week challenge"
+                        : `Are you ready for this week's challenge? You have ${
+                            3 - wclAttempts
+                          } more attempts left...`}
+                    </Text>
+                  </div>
+                )}
+                {card.btns &&
+                  card.btns.map((btn, i) => (
+                    <Button
+                      key={i}
+                      onPress={() => handleOnpress(card.type, btn)}
+                    >
+                      {btn}
+                    </Button>
+                  ))}
               </div>
             </Card.Body>
           </Card>

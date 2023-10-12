@@ -8,42 +8,17 @@ import * as ResultAction from "../../../redux/result_reducer";
 import data from "./data-base";
 import Questions from "./Questions";
 import DragnDrop from "./DragnDrop";
-import { Button } from "@nextui-org/react";
+import { Button, Text } from "@nextui-org/react";
+import ChallengeTimer from "./ChallengeTimer";
 
 const WeeklyChallenges = () => {
   const result = useSelector((state) => state.result.result);
-  const common = useSelector((state) => state.common);
-  const { queue, trace } = useSelector((state) => state.questions);
+  const { queue, trace, selectedQuizType } = useSelector(
+    (state) => state.questions
+  );
   const dispatch = useDispatch();
   const [check, setChecked] = useState(undefined);
-  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    // Fetch MCQ questions from the server when the component mounts
-    fetchQuestions();
-  }, []);
-
-  const fetchQuestions = async () => {
-    try {
-      setIsLoading(true);
-      // const response = await axios.get(
-      //   "http://localhost:5000/adminApp/questions/getAll"
-      // );
-
-      // if (response.data) {
-      //   dispatch(Action.startExamAction(data));
-      //   setIsLoading(false);
-      // } else {
-      //   throw new Error();
-      // }
-
-      dispatch(Action.startExamAction(data));
-      setIsLoading(false);
-    } catch (error) {
-      console.error("Error fetching questions:", error);
-    }
-  };
 
   function onNext() {
     if (trace < queue.length) {
@@ -58,13 +33,6 @@ const WeeklyChallenges = () => {
     setChecked(undefined);
     if (trace === queue.length - 1) {
       navigate("/quiz/results");
-      dispatch(Action.resetAllAction());
-    }
-  }
-
-  function onPrev() {
-    if (trace > 0) {
-      dispatch(Action.movePrevAction());
     }
   }
 
@@ -75,10 +43,12 @@ const WeeklyChallenges = () => {
 
   return (
     <div className="container">
+      <Text>Time Remaining</Text>
+      <ChallengeTimer duration={900}></ChallengeTimer>
       <p>
-        {common.selectedQuizType === "mcq"
+        {queue[trace].type === "mcq"
           ? "Multiple Choice Questions"
-          : common.selectedQuizType === "dnd"
+          : queue[trace].type === "dnd"
           ? "Drag and Drop Questions"
           : null}
       </p>
@@ -88,22 +58,13 @@ const WeeklyChallenges = () => {
       </p>
 
       <p>Difficulty: {queue[trace] && queue[trace].difficulty}</p>
-
-      {/*Questions*/}
-      {isLoading && <p>Loading....</p>}
-
-      {!isLoading &&
-        (common.selectedQuizType === "mcq" ? (
-          <Questions onChecked={onChecked}></Questions>
-        ) : common.selectedQuizType === "dnd" ? (
-          <DragnDrop onChecked={onChecked}></DragnDrop>
-        ) : null)}
+      {queue[trace].type === "mcq" ? (
+        <Questions onChecked={onChecked}></Questions>
+      ) : queue[trace].type === "dnd" ? (
+        <DragnDrop onChecked={onChecked}></DragnDrop>
+      ) : null}
 
       <div>
-        <Button disabled={trace === 0} onPress={onPrev}>
-          Previous
-        </Button>
-
         <Button onPress={onNext}>
           {trace < queue.length - 1 ? "Next" : "Finish"}
         </Button>

@@ -6,39 +6,72 @@ import { useDispatch, useSelector } from "react-redux";
 import { resetAllAction } from "../../../redux/question_reducer";
 import { resetResultAction } from "../../../redux/result_reducer";
 import * as ResultAction from "../../../redux/result_reducer";
+import * as Action from "../../../redux/question_reducer";
 import {
   attempts_Number,
   earnedPoints,
   flagResult,
 } from "../../../helper/Helper";
 import "../quiz-components/Quiz.css";
+import { useState } from "react";
+import html2canvs from "html2canvas";
+import jsPDF from "jspdf";
+import { useRef } from "react";
 
 export default function QuizResult({ isDark }) {
+  const [loader, setLoader] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const {
-    questions: { queue, answers },
-    result: { result, userId },
-  } = useSelector((state) => state);
 
-  useEffect(() => {
-    console.log(flag);
+  const pdfRef = useRef();
+
+  const { queue, selectedQuizType } = useSelector((state) => state.questions);
+  const { result } = useSelector((state) => state.result);
+
+  useEffect(() => {});
+
+  const answers = queue.map((element) => {
+    return element.correctAnswerIndex;
   });
+  console.log(answers, "answers");
+  console.log(queue, "queue");
 
-  // const totalPoints = queue.length * 10;
+  const totalPoints = queue.length * 10;
   // const attempts = attempts_Number(result);
-  // const earnPoints = earnedPoints(result, answers, 10);
-  // const flag = flagResult(totalPoints, earnPoints);
-
-  const totalPoints = 20;
-  const attempts = 10;
-  const earnPoints = 10;
-  const flag = 1;
+  const earnPoints = earnedPoints(answers, result, 10);
+  // const flagResult = flagResult(totalPoints, earnPoints);
 
   function onRestart() {
-    dispatch(resetAllAction());
-    dispatch(resetResultAction());
+    // dispatch(resetAllAction());
+    // dispatch(resetResultAction());
   }
+
+  const handleDownload = () => {
+    setLoader(true);
+    const input = pdfRef.current;
+    html2canvs(input).then((canvas) => {
+      const imgData = canvas.toDataURL("img/png");
+      const pdf = new jsPDF("p", "mm", "a4", true);
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = pdf.internal.pageSize.getHeight();
+      const imgWidth = canvas.width;
+      const imgHeight = canvas.height;
+      const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight);
+      const imgX = (pdfWidth - imgWidth * ratio) / 2;
+      const imgY = 30;
+      pdf.addImage(
+        imgData,
+        "PNG",
+        imgX,
+        imgY,
+        imgWidth * ratio,
+        imgHeight * ratio
+      );
+      pdf.save("quiz-resutl.pdf");
+      setLoader(false);
+    });
+  };
+
   return (
     <div className="container">
       <center>
@@ -65,13 +98,6 @@ export default function QuizResult({ isDark }) {
 
           <div className="flex">
             <span style={{ fontSize: "18px", textAlign: "center" }}>
-              Total Attempts :{" "}
-            </span>
-            <span className="bold">{attempts || 0}</span>
-          </div>
-
-          <div className="flex">
-            <span style={{ fontSize: "18px", textAlign: "center" }}>
               Total Points Earned :{" "}
             </span>
             <span className="bold">{earnPoints || 0}</span>
@@ -82,14 +108,28 @@ export default function QuizResult({ isDark }) {
               Quiz Result{" "}
             </span>
             <span
-              style={{ color: `${flag ? "#2aff95" : "#ff2a66"}` }}
+              style={{
+                color: `${
+                  flagResult(totalPoints, earnPoints) ? "#2aff95" : "#ff2a66"
+                }`,
+              }}
               className="bold"
             >
-              {flag ? "Passed" : "Failed"}
+              {flagResult(totalPoints, earnPoints) ? "Passed" : "Failed"}
             </span>
           </div>
 
-          <Button style={{marginTop:"24px"}} auto ghost onClick={() => {navigate("/quiz/home");dispatch(ResultAction.resetResultAction());}}>Back to Quiz page</Button>
+          <Button
+            style={{ marginTop: "24px" }}
+            auto
+            ghost
+            onClick={() => {
+              navigate("/quiz/home");
+              dispatch(ResultAction.resetResultAction());
+            }}
+          >
+            Back to Quiz page
+          </Button>
         </Card.Body>
       </Card>
     </div>

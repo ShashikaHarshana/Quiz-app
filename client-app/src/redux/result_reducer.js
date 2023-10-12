@@ -27,6 +27,9 @@ export const resultReducer = createSlice({
     resetWclResutlAction: (state, action) => {
       return { ...state, wclResult: [] };
     },
+    updateWclChallengeAttempts: (state) => {
+      return { ...state, wclAttempts: state.wclAttempts + 1 };
+    },
   },
 });
 
@@ -35,6 +38,7 @@ export const {
   pushResultAction,
   resetResultAction,
   updateResultAction,
+  updateWclChallengeAttempts,
 } = resultReducer.actions;
 
 export default resultReducer.reducer;
