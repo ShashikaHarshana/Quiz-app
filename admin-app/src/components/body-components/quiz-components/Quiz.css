@@ -138,6 +138,7 @@ span.login {
 
 .nextui-table-cell{
   border-bottom: 1px solid #e2e2e2;
+  white-space: normal;
 }
 
 .dark-theme .nextui-table-cell{
