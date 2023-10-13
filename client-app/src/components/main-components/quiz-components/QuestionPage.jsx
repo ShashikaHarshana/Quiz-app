@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./Quiz.css";
-import { Card, p, Col, Grid, Button } from "@nextui-org/react";
+import { Card, p, Col, Grid, Button, Divider } from "@nextui-org/react";
 import Questions from "./Questions";
 import data from "./data-base";
 import { useSelector, useDispatch } from "react-redux";
@@ -61,13 +61,15 @@ export default function QuestionPage() {
           : null}
       </p>
 
-      <p>
-        Question {trace + 1} of {queue && queue.length}
-      </p>
+      <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <p>
+          Question {trace + 1} of {queue.length}
+        </p>
 
-      <p>Difficulty: {queue[trace] && queue[trace].difficulty}</p>
+        <p>Difficulty: {queue[trace] && queue[trace].difficulty}</p>
+      </div>
 
-      {/*Questions*/}
+      <Divider />
 
       {selectedQuizType === "mcq" ? (
         <Questions onChecked={onChecked}></Questions>
@@ -83,7 +85,7 @@ export default function QuestionPage() {
             Previous
           </Button>
         )}
-
+        <Divider />
         <Button onPress={onNext}>
           {trace < queue.length - 1 ? "Next" : "Finish"}
         </Button>

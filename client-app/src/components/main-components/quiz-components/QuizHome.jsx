@@ -34,12 +34,12 @@ export default function QuizHome({ isDark }) {
   const cardList = [
     {
       title: "Multiple Choice Questions",
-      btns: ["beginner", "intermediate", "advanced"],
+      btns: ["Beginner", "Intermediate", "Advanced"],
       type: "mcq",
     },
     {
       title: "Drag and Drop Questions",
-      btns: ["beginner", "intermediate", "advanced"],
+      btns: ["Beginner", "Intermediate", "Advanced"],
       type: "dnd",
     },
     {
@@ -83,7 +83,7 @@ export default function QuizHome({ isDark }) {
   return (
     <div className="quiz-container">
       <section>
-        <Text>Quiz Management System</Text>
+        <h3 className="quiz-management-header">Quiz Management System</h3>
       </section>
       <div className="quiz-type-container">
         {cardList.map((card, index) => (

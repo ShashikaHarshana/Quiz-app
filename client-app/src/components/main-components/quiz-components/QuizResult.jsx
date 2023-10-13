@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import "./Quiz.css";
 import { Link, useNavigate } from "react-router-dom";
-import { Grid, Button } from "@nextui-org/react";
+import { Card, Button, Text } from "@nextui-org/react";
 import { useDispatch, useSelector } from "react-redux";
 import { resetAllAction } from "../../../redux/question_reducer";
 import { resetResultAction } from "../../../redux/result_reducer";
@@ -74,83 +74,68 @@ export default function QuizResult({ isDark }) {
 
   return (
     <div className="container">
-      <div className="results-container" ref={pdfRef}>
+      <div ref={pdfRef}>
         <center>
-          <h1 className="title text-light">Results</h1>
+          <h1 className="title text-light"></h1>
         </center>
+        <Card className="card">
+          <Card.Header className="quiz-container-card-title">
+            <Text>Results</Text>
+          </Card.Header>
+          <Card.Body>
+            <div className="flex">
+              <span style={{ fontSize: "18px", textAlign: "center" }}>
+                Total Quiz Points :{" "}
+              </span>
+              <span className="bold">{totalPoints || 0}</span>
+            </div>
 
-        <div
-          className={`card ${isDark ? "card-dark" : "card-light"}`}
-          style={{
-            maxWidth: "600px",
-            margin: "0 auto",
-            padding: "20px",
-            boxShadow: "0 0 10px rgba(0, 0, 0, 0.2)",
-            borderRadius: "5px",
-          }}
-        >
-          {/* <div className='flex'>
-        <span style={{ fontSize: '20px'}}>Username</span>
-        <span className='bold'>{userId}</span>
-      </div> */}
-          <div className="flex">
-            <span style={{ fontSize: "18px", textAlign: "center" }}>
-              Total Quiz Points :{" "}
-            </span>
-            <span className="bold">{totalPoints || 0}</span>
-          </div>
-          <div className="flex">
-            <span style={{ fontSize: "18px", textAlign: "center" }}>
-              Total Questions :{" "}
-            </span>
-            <span className="bold">{queue.length || 0}</span>
-          </div>
-          <div className="flex">
-            <span style={{ fontSize: "18px", textAlign: "center" }}>
-              Total Points Earned :{" "}
-            </span>
-            <span className="bold">{earnPoints || 0}</span>
-          </div>
-          <div className="flex">
-            <span style={{ fontSize: "18px", textAlign: "center" }}>
-              Quiz Result :{" "}
-            </span>
-            <span
-              style={{
-                color: `${
-                  flagResult(totalPoints, earnPoints) ? "#2aff95" : "#ff2a66"
-                }`,
-              }}
-              className="bold"
-            >
-              {flagResult(totalPoints, earnPoints) ? "Passed" : "Failed"}
-            </span>
-          </div>
-        </div>
+            <div className="flex">
+              <span style={{ fontSize: "18px", textAlign: "center" }}>
+                Total Questions :{" "}
+              </span>
+              <span className="bold">{queue.length || 0}</span>
+            </div>
+
+            <div className="flex">
+              <span style={{ fontSize: "18px", textAlign: "center" }}>
+                Total Points Earned :{" "}
+              </span>
+              <span className="bold">{earnPoints || 0}</span>
+            </div>
+
+            <div className="flex">
+              <span style={{ fontSize: "18px", textAlign: "center" }}>
+                Quiz Result{" "}
+              </span>
+              <span
+                style={{
+                  color: `${
+                    flagResult(totalPoints, earnPoints) ? "#2aff95" : "#ff2a66"
+                  }`,
+                }}
+                className="bold"
+              >
+                {flagResult(totalPoints, earnPoints) ? "Passed" : "Failed"}
+              </span>
+            </div>
+          </Card.Body>
+        </Card>
       </div>
       <Button
-        color="gradient"
+        style={{ marginTop: "24px" }}
         auto
         ghost
         onClick={() => {
           navigate("/quiz/home");
           dispatch(ResultAction.resetResultAction());
-          dispatch(Action.resetAllAction());
-          if (selectedQuizType === "wlc") {
-            dispatch(ResultAction.updateWclChallengeAttempts());
-          }
         }}
       >
         Back to Quiz page
       </Button>
-      <Button
-        onPress={handleDownload}
-        color="gradient"
-        auto
-        ghost
-        disabled={!(loader === false)}
-      >
-        {loader ? "Downloading " : "Download Result"}
+
+      <Button style={{ marginTop: "24px" }} auto ghost onPress={handleDownload}>
+        Download Pdf
       </Button>
     </div>
   );
