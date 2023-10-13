@@ -20,16 +20,10 @@ export const questionReducer = createSlice({
           return question;
         }
       });
-      let shuffled;
-      if (state.selectedQuizType === "wlc") {
-        shuffled = state.questions.sort(function () {
-          return 0.5 - Math.random();
-        });
-      } else {
-        shuffled = filteredQuestions.sort(function () {
-          return 0.5 - Math.random();
-        });
-      }
+
+      const shuffled = filteredQuestions.sort(function () {
+        return 0.5 - Math.random();
+      });
 
       const selectedQuestions = shuffled.slice(0, 10);
 
