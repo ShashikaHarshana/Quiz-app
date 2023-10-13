@@ -131,7 +131,7 @@ export default function QuizInstructions() {
               <WeeklyChallenges></WeeklyChallenges>
             ) : (
               <QuestionPage></QuestionPage>
-            )}{" "}
+            )}
           </Modal.Body>
         </Modal>
       </div>
