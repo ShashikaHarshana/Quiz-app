@@ -50,6 +50,8 @@ const WeeklyChallenges = () => {
           ? "Multiple Choice Questions"
           : queue[trace].type === "dnd"
           ? "Drag and Drop Questions"
+          : queue[trace].type === "wlc"
+          ? "Weekly Challenge"
           : null}
       </p>
 
