@@ -100,6 +100,8 @@ export default function QuizInstructions() {
               ? "Weekly challenge Guidelines"
               : null}
           </Text>
+        </Card.Header>
+        <Card.Body>
           <ol>
             {instruction &&
               instruction.guideLines &&
@@ -107,15 +109,16 @@ export default function QuizInstructions() {
                 <li key={index}>{line}</li>
               ))}
           </ol>
+          <div style={{display:"flex", gap:"16px", justifyContent:"flex-end"}}>
+            <Button onPress={handlerBack} color="gradient" auto ghost>
+              Go Back
+            </Button>
 
-          <Button onPress={handlerBack} color="gradient" auto ghost>
-            Go Back
-          </Button>
-
-          <Button onPress={handler} color="gradient" auto ghost>
-            {instruction.btn}
-          </Button>
-        </Card.Header>
+            <Button onPress={handler} color="gradient" auto ghost>
+              {instruction.btn}
+            </Button>
+          </div>
+        </Card.Body>
       </Card>
       <div>
         <Modal
@@ -131,7 +134,7 @@ export default function QuizInstructions() {
               <WeeklyChallenges></WeeklyChallenges>
             ) : (
               <QuestionPage></QuestionPage>
-            )}{" "}
+            )}
           </Modal.Body>
         </Modal>
       </div>

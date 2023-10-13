@@ -122,21 +122,24 @@ export default function QuizResult({ isDark }) {
           </Card.Body>
         </Card>
       </div>
-      <Button
-        style={{ marginTop: "24px" }}
-        auto
-        ghost
-        onClick={() => {
-          navigate("/quiz/home");
-          dispatch(ResultAction.resetResultAction());
-        }}
-      >
-        Back to Quiz page
-      </Button>
+      <div style={{display:"flex", gap:"16px"}}>
+        <Button
+          style={{ marginTop: "24px" ,width:"100%" }}
+          auto
+          ghost
+          onClick={() => {
+            navigate("/quiz/home");
+            dispatch(ResultAction.resetResultAction());
+          }}
+        >
+          Back to Quiz page
+        </Button>
 
-      <Button style={{ marginTop: "24px" }} auto ghost onPress={handleDownload}>
-        Download Pdf
-      </Button>
+        <Button style={{ marginTop: "24px" ,width:"100%" }} auto ghost onPress={handleDownload}>
+          Download Pdf
+        </Button>
+      </div>
+
     </div>
   );
 }

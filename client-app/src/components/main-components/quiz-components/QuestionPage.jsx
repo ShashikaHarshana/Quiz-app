@@ -53,15 +53,15 @@ export default function QuestionPage() {
 
   return (
     <div className="container">
-      <p>
+      <h3>
         {selectedQuizType === "mcq"
           ? "Multiple Choice Questions"
           : selectedQuizType === "dnd"
           ? "Drag and Drop Questions"
           : null}
-      </p>
+      </h3>
 
-      <div style={{ display: "flex", justifyContent: "space-between" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", marginBottom:"8px" }}>
         <p>
           Question {trace + 1} of {queue.length}
         </p>
@@ -79,14 +79,13 @@ export default function QuestionPage() {
         <WeeklyChallenges></WeeklyChallenges>
       ) : null}
 
-      <div>
+      <div style={{ display: "flex", justifyContent: "end", gap:"8px" }}>
         {selectedQuizType === "mcq" && (
-          <Button disabled={trace === 0} onPress={onPrev}>
+          <Button disabled={trace === 0} onPress={onPrev} style={{minWidth:"inherit", width: "100%"}}>
             Previous
           </Button>
         )}
-        <Divider />
-        <Button onPress={onNext}>
+        <Button style={{minWidth:"inherit", width: "100%"}} onPress={onNext}>
           {trace < queue.length - 1 ? "Next" : "Finish"}
         </Button>
       </div>
