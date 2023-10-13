@@ -8,7 +8,7 @@ import * as ResultAction from "../../../redux/result_reducer";
 import data from "./data-base";
 import Questions from "./Questions";
 import DragnDrop from "./DragnDrop";
-import { Button, Text } from "@nextui-org/react";
+import { Button, Divider, Text } from "@nextui-org/react";
 import ChallengeTimer from "./ChallengeTimer";
 
 const WeeklyChallenges = () => {
@@ -58,11 +58,13 @@ const WeeklyChallenges = () => {
       </p>
 
       <p>Difficulty: {queue[trace] && queue[trace].difficulty}</p>
+      <Divider />
       {queue[trace].type === "mcq" ? (
         <Questions onChecked={onChecked}></Questions>
       ) : queue[trace].type === "dnd" ? (
         <DragnDrop onChecked={onChecked}></DragnDrop>
       ) : null}
+      <Divider />
 
       <div>
         <Button onPress={onNext}>
