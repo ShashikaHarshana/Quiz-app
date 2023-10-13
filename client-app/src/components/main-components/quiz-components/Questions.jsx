@@ -48,9 +48,9 @@ export default function Questions({ onChecked }) {
     <div className="questions">
       {queue[trace].type === "mcq" && (
         <div>
-          <h2 className="text-light">
+          <h4 className="text-light">
             {trace + 1} . {question && question.title}
-          </h2>
+          </h4>
           <ul key={question && question.id}>
             {question &&
               question.answers.map((question, index) => {
