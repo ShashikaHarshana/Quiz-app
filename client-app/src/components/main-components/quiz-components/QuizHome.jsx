@@ -117,7 +117,7 @@ export default function QuizHome({ isDark }) {
                       key={i}
                       onPress={() => handleOnpress(card.type, btn)}
                     >
-                      {btn}
+                      {btn.toLocaleUpperCase()}
                     </Button>
                   ))}
               </div>
